@@ -1,21 +1,34 @@
 {
+    "ignoreBots": true,
+    "userToken": false,
+    "voiceAttachmentName": "Yoshino",
+    "messageResponseType": "voice",
+    "discord": {
+        "gatewayBaseUrl": "wss://gateway.discord.gg",
+        "gatewayVersion": 10,
+        "apiBaseUrl": "https://discord.com/api/v10",
+        "properties": {
+            "os": "YoshinOS",
+            "browser": "libyoshino",
+            "device": "libyoshino"
+        }
+    },
     "openAi": {
         "model": "gpt-5.1",
         "systemRole": "system"
     },
     "elevenLabs": {
+        "enabled": true,
         "voice": "NOpBlnGInO9m6vDvFkFC",
         "model": "eleven_multilingual_v2"
     },
-    "voiceAttachmentName": "yoshino",
-    "messageType": "voice",
-    "ignoreBots": true,
-
+    
     "channels": [
-        
+        "1309851265764818954",
+        "875581360071376929"
     ],
     "guilds": [
-
+        "875581360071376926"
     ],
     "users": [
 

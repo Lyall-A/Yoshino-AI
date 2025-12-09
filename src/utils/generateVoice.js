@@ -1,4 +1,4 @@
-const config = require('../config.json');
+const { config } = require('../globals');
 
 function generateVoice(text) {
     const headers = {
