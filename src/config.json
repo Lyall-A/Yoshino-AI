@@ -1,0 +1,23 @@
+{
+    "openAi": {
+        "model": "gpt-5.1",
+        "systemRole": "system"
+    },
+    "elevenLabs": {
+        "voice": "NOpBlnGInO9m6vDvFkFC",
+        "model": "eleven_multilingual_v2"
+    },
+    "voiceAttachmentName": "yoshino",
+    "messageType": "voice",
+    "ignoreBots": true,
+
+    "channels": [
+        
+    ],
+    "guilds": [
+
+    ],
+    "users": [
+
+    ]
+}
