@@ -2,7 +2,13 @@
     "ignoreBots": true,
     "userToken": false,
     "voiceAttachmentName": "Yoshino",
-    "messageResponseType": "voice",
+    "messageResponseType": "text",
+    "historyCleanInterval": 60000,
+    "historyLength": 20,
+    "historyExpiry": 1800000,
+    "historyCharacterLimit": null,
+    "messageCharacterLimit": null,
+    "responseCharacterLimit": null,
     "discord": {
         "gatewayBaseUrl": "wss://gateway.discord.gg",
         "gatewayVersion": 10,
@@ -11,11 +17,22 @@
             "os": "YoshinOS",
             "browser": "libyoshino",
             "device": "libyoshino"
+        },
+        "presence": {
+            "activities": [
+                {
+                    "name": "custom",
+                    "state": "meow :3",
+                    "type": 4
+                }
+            ],
+            "status": "online",
+            "afk": false
         }
     },
     "openAi": {
         "model": "gpt-5.1",
-        "systemRole": "system"
+        "systemRole": "developer"
     },
     "elevenLabs": {
         "enabled": true,
@@ -25,7 +42,7 @@
     
     "channels": [
         "1309851265764818954",
-        "875581360071376929"
+        "_875581360071376929"
     ],
     "guilds": [
         "875581360071376926"
