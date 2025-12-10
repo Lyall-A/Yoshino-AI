@@ -6,7 +6,7 @@ const globals = {
     config,
     client: new Client({
         token: process.env.DISCORD_TOKEN,
-        selfToken: config.userToken,
+        userToken: config.userToken,
         intents: [
             INTENTS.GUILDS,
             INTENTS.GUILD_MESSAGES,

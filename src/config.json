@@ -3,18 +3,29 @@
     "userToken": false,
     "voiceAttachmentName": "Yoshino",
     "messageResponseType": "text",
+    "calculateVoiceLength": false,
     "historyCleanInterval": 60000,
     "historyLength": 20,
     "historyExpiry": 1800000,
+    "historyIncludeIgnored": false,
     "historyCharacterLimit": null,
     "messageCharacterLimit": null,
     "responseCharacterLimit": null,
+    "promptOptions": {
+        "name": "Yoshino",
+        "personality": "Regular member",
+        "writingStyle": "Informal (lowercase, slangs, abbreviations, etc.), match other users writing style",
+        "rules": [
+            "Don't use the abbreviations 'wut', 'r'",
+            "No g-dropping (eg. nothin instead of nothing)"
+        ]
+    },
     "discord": {
         "gatewayBaseUrl": "wss://gateway.discord.gg",
         "gatewayVersion": 10,
         "apiBaseUrl": "https://discord.com/api/v10",
         "properties": {
-            "os": "YoshinOS",
+            "os": "YoshinoOS",
             "browser": "libyoshino",
             "device": "libyoshino"
         },
@@ -37,7 +48,8 @@
     "elevenLabs": {
         "enabled": true,
         "voice": "NOpBlnGInO9m6vDvFkFC",
-        "model": "eleven_multilingual_v2"
+        "model": "eleven_multilingual_v2",
+        "format": "wav"
     },
     
     "channels": [

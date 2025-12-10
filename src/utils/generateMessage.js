@@ -22,7 +22,7 @@ function generateMessage(systemMessage, messages = [ ], responses = [ ]) {
                 ...[
                     ...messages.map(message => ({
                         role: 'user',
-                        content: message.content,
+                        content: message.prompt,
                         timestamp: message.timestamp
                     })),
                     ...responses.map(response => ({
@@ -37,7 +37,7 @@ function generateMessage(systemMessage, messages = [ ], responses = [ ]) {
         })
     })
     .then(res => res.json())
-    .then(json => json.choices[0].message);
+    .then(json => json.choices[0].message.content);
 }
 
 module.exports = generateMessage;

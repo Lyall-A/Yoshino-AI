@@ -8,7 +8,7 @@ function sendMessage(channelId, message, voice, messageResponseFeatures) {
     
     if (messageResponseFeatures.text) {
         // If response should include message
-        body.content = message.content;
+        body.content = message;
     }
     
     if (voice && (messageResponseFeatures.attachment || messageResponseFeatures.voice)) {
@@ -24,7 +24,7 @@ function sendMessage(channelId, message, voice, messageResponseFeatures) {
             body.attachments = [
                 {
                     id: 0,
-                    duration_secs: (voice.buffer.length * 8) / (voice.bitrate * 1000),
+                    duration_secs: config.calculateVoiceDuration ? (voice.buffer.length * 8) / (voice.bitrate * 1000) : 0,
                     waveform: ''
                 }
             ]

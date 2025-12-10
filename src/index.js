@@ -5,7 +5,7 @@ const generateVoice = require('./utils/generateVoice');
 const sendMessage = require('./utils/sendMessage');
 
 // Prompts
-const { createSystemPrompt } = require('./prompts');
+const { createSystemPrompt, createUserPrompt, parseAssistantResponse } = require('./prompts');
 
 const { config, client } = require('./globals'); // Globals
 
@@ -40,37 +40,45 @@ client.on(EVENTS.MESSAGE_CREATE, async message => {
     const channelMessages = messages[channel.id];
     const channelResponses = responses[channel.id];
 
+    const promptOptions = {
+        ...config.promptOptions,
+        message,
+        guild,
+        channel,
+        user: message.author,
+        member: message.member
+    };
+
     cache.lastMessage = Date.now();
     channelMessages.push({
         id: message.id,
         content: message.content,
+        prompt: createUserPrompt(promptOptions),
         timestamp: cache.lastMessage,
     });
 
-    const promptOptions = {
-        message,
-        guild,
-        channel
-    };
-
     const beforeGenerateMessage = Date.now();
-    const generatedMessage = await generateMessage(createSystemPrompt(promptOptions), channelMessages, channelResponses);
+    const generatedMessage = parseAssistantResponse(await generateMessage(createSystemPrompt(promptOptions), channelMessages, channelResponses));
+    const messageIgnored = !generatedMessage.message || generatedMessage.ignored;
     const afterGenerateMessage = Date.now();
 
     const beforeGenerateVoice = afterGenerateMessage;
-    const generatedVoice = voiceEnabled ? await generateVoice(generatedMessage.content) : null;
-    const afterGenerateVoice = Date.now()
+    const generatedVoice = (voiceEnabled && !messageIgnored) ? await generateVoice(generatedMessage.response) : null;
+    const afterGenerateVoice = Date.now();
 
-    cache.lastResponse = Date.now();
-    channelResponses.push({
-        timestamp: lastResponse,
-        generateMessageTime: afterGenerateMessage - beforeGenerateMessage,
-        generateVoiceTime: afterGenerateVoice - beforeGenerateVoice,
-        features: messageResponseFeatures,
-        content: generatedMessage.content
-    });
+    if (!messageIgnored || config.historyIncludeIgnored) {
+        cache.lastResponse = Date.now();
+        channelResponses.push({
+            timestamp: cache.lastResponse,
+            messageGenerationTime: afterGenerateMessage - beforeGenerateMessage,
+            voiceGenerationTime: afterGenerateVoice - beforeGenerateVoice,
+            features: messageResponseFeatures,
+            content: generatedMessage.content
+        });
+    }
 
-    await sendMessage(message.channelId, generatedMessage, generatedVoice, messageResponseFeatures);
+    console.log(messageIgnored, generatedMessage)
+    if (!messageIgnored) await sendMessage(message.channelId, generatedMessage.message, generatedVoice, messageResponseFeatures);
 
     async function getCache() {
         let cache = cacheList.find(cache => cache.guild.id === message.guildId);
